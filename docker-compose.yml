@@ -1,0 +1,28 @@
+# AgentTrail local stack — one command:
+#   docker compose up --build
+# API:       http://localhost:8080
+# Dashboard: http://localhost:5173
+#
+# The server runs on H2 in-memory by default (zero-config dev, data is
+# ephemeral). Set AGENTTRAIL_API_KEY to change the API key from dev-key.
+# NOTE: the dashboard bakes VITE_API_KEY in at build time, so a custom key
+# needs `docker compose up --build` to take effect in the web UI.
+
+services:
+  api:
+    build: ./server
+    ports:
+      - "8080:8080"
+    environment:
+      AGENTTRAIL_API_KEY: ${AGENTTRAIL_API_KEY:-dev-key}
+
+  web:
+    build:
+      context: ./web
+      args:
+        VITE_API_URL: http://localhost:8080
+        VITE_API_KEY: ${AGENTTRAIL_API_KEY:-dev-key}
+    ports:
+      - "5173:80"
+    depends_on:
+      - api

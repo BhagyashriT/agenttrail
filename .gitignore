@@ -1,0 +1,24 @@
+# build outputs
+web/dist/
+web/node_modules/
+server/target/
+sdks/java/target/
+*.class
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.pytest_cache/
+.venv/
+venv/
+
+# java
+.mvn/wrapper/maven-wrapper.jar
+
+# misc
+*.log
+.DS_Store
+.idea/
+.vscode/

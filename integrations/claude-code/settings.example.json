@@ -1,0 +1,81 @@
+{
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "/home/user/workspace/agenttrail/integrations/claude-code/hooks/notification.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "/home/user/workspace/agenttrail/integrations/claude-code/hooks/post_tool_use.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "/home/user/workspace/agenttrail/integrations/claude-code/hooks/pre_tool_use.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "/home/user/workspace/agenttrail/integrations/claude-code/hooks/session_start.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "/home/user/workspace/agenttrail/integrations/claude-code/hooks/stop.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "command": "/home/user/workspace/agenttrail/integrations/claude-code/hooks/subagent_stop.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "/home/user/workspace/agenttrail/integrations/claude-code/hooks/user_prompt_submit.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ]
+  }
+}
