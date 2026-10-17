@@ -106,3 +106,29 @@ agenttrail/
 ## License
 
 MIT.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    HOOKS[Claude Code hooks] --> API[POST /api/v1/sessions\nPOST /api/v1/sessions/{id}/events]
+    SDK[Python / Java SDKs\nbatching + retries] --> API
+    WRAP[run_wrapped.sh\nany CLI] --> API
+    API --> INGEST[idempotent ingest\nclient UUIDs +\nunique(session_id, seq)]
+    INGEST --> DB[(Postgres prod\nH2 dev)]
+    DB --> DASH[React dashboard\nsessions · timeline · errors · overview]
+    DB --> STATS[rollups\ncost · errors by tool]
+```
+
+## Design trade-offs
+
+- **Client-supplied ids + `unique(session_id, seq)` backstop** — at-least-once delivery from hooks and SDKs never double-records, even if a retry races the original. The price: clients must generate UUIDs; server-assigned ids would be simpler but couldn't deduplicate retries.
+- **Integrations push, dashboard pulls** — a new agent integration needs only HTTP + an API key; nothing to deploy server-side. WebSockets would give live tailing but add connection state the server doesn't need yet.
+- **Hooks can never break your session** — try/except around everything, 3s timeout, always exit 0, and the key is never logged. Observability that crashes the thing it observes is worse than no observability.
+- **Postgres in prod, H2 in dev** — zero-setup local runs; Flyway keeps both schemas honest.
+
+## Known limitations
+
+- Single API-key auth — fine for personal and small-team use; multi-workspace keys + OIDC are on the roadmap before any hosted offering.
+- Cost rollups depend on reported token usage; models that don't report usage show as unknown, not zero.
+- 15 MockMvc integration tests + 9 pytest hook tests green.
