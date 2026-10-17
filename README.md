@@ -103,10 +103,6 @@ agenttrail/
 - **Hosted cloud** — multi-workspace API keys, OIDC login, retention policies;
   the single-key auth model is the thing that has to grow up first.
 
-## License
-
-MIT.
-
 ## Architecture
 
 ```mermaid
@@ -132,3 +128,7 @@ flowchart LR
 - Single API-key auth — fine for personal and small-team use; multi-workspace keys + OIDC are on the roadmap before any hosted offering.
 - Cost rollups depend on reported token usage; models that don't report usage show as unknown, not zero.
 - 15 MockMvc integration tests + 9 pytest hook tests green.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
