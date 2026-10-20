@@ -66,6 +66,7 @@ Event types: `session_start` · `session_end` · `tool_call` · `message` · `er
 ```
 agenttrail/
 ├── server/                  # Java 21 + Spring Boot 3 API, Flyway, Postgres (H2 in dev)
+├── mcp/                     # Java MCP server (stdio): query sessions/events/costs from AI assistants
 ├── web/                     # React + Vite dashboard
 ├── integrations/
 │   ├── claude-code/         # hooks: per-tool session tracing (install.sh + 7 hooks + tests)
@@ -93,6 +94,15 @@ agenttrail/
   API key; nothing to deploy server-side.
 - **Hooks can never break your session** — try/except around everything, 3s
   timeout, one log line on failure, always exit 0 (and the key is never logged).
+
+## MCP server
+
+`mcp/` is a Model Context Protocol server (stdio, Java + the official
+`modelcontextprotocol/java-sdk`) that exposes AgentTrail to AI assistants:
+`list_sessions`, `get_session_events`, `search_events`, and `cost_summary` —
+all read-only, all mapped to the v1 API. Ask Claude *"what failed in my agent
+runs today?"* and it replays the session to the exact `seq` that broke.
+See [`mcp/README.md`](mcp/README.md) for setup and the demo transcript.
 
 ## Roadmap
 
